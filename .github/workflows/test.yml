@@ -1,0 +1,43 @@
+name: Contracts Tooling
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+env:
+  BUN_VERSION: 1.1.30
+
+# When pushing new commits to a pull request, automatically cancel the previous
+# workflow run. This reduces wasted compute power for CI that we pay for
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test-typescript:
+    name: Typescript Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          token: ${{ secrets.INTERNAL_REPO_ACCESS_TOKEN }}
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install dependencies
+        working-directory: typescript
+        run: |
+          bun install
+
+      - name: Run Checks
+        working-directory: typescript
+        run: |
+          bun run tsc
+          bun run lint:format
+          bun run lint:ts
+
