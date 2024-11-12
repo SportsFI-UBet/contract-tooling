@@ -1,0 +1,8 @@
+{
+  "compile_force_framework": "foundry",
+  "detectors_to_exclude": "solc-version",
+  "foundry_out_directory": "out",
+  "ignore_compile": true,
+  "skip_clean": true,
+  "filter_paths": "lib"
+}
