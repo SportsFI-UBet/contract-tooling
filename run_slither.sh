@@ -28,7 +28,7 @@ slither . --filter-paths 'lib/' "$@" 2>${TEMP_OUTPUT} || true
 cat ${TEMP_OUTPUT}
 
 # Check error log
-if grep -Ee "(Traceback|Error)" ${TEMP_OUTPUT}; then
+if grep -Ee "(Traceback|Error(?!s\.sol))" ${TEMP_OUTPUT}; then
   echo Logs contained Error or Traceback!
   exit 1
 fi
