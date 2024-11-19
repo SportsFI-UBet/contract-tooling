@@ -20,6 +20,7 @@
     "viem": "2.x"
   },
   "devDependencies": {
+    "@typechain/ethers-v5": "^11.0.0",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.2.5",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
