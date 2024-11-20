@@ -1,7 +1,0 @@
-lib/
-!typescript/lib
-node_modules/
-typechain/
-*.js
-
-admin-ui/
