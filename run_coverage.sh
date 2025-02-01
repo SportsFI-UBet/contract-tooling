@@ -37,9 +37,6 @@ filterLCOV  lcov.info 'test*' lcov.info.filtered
 # exclude foundry scripts coverage
 filterLCOV  lcov.info.filtered 'script*' lcov.info.filtered
 
-# exclude testnet coverage
-filterLCOV  lcov.info.filtered 'contracts/testnet*' lcov.info.filtered
-
 # generate HTML report based on lcov file
 genhtml --branch-coverage --legend -o ${HTML_DIR} lcov.info.filtered
 
