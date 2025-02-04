@@ -28,14 +28,20 @@ function filterLCOV() {
     FILTER=${2}
     OUTPUT_FILE=${3}
 
-    lcov --rc lcov_branch_coverage=1 --remove ${INPUT_FILE} "${FILTER}" -o ${OUTPUT_FILE}
+    lcov --rc lcov_branch_coverage=1 --ignore-errors empty --remove ${INPUT_FILE} "${FILTER}" -o ${OUTPUT_FILE}
 }
 
 # exclude foundry test coverage
-filterLCOV  lcov.info 'test*' lcov.info.filtered
+filterLCOV lcov.info 'test*' lcov.info.filtered
 
 # exclude foundry scripts coverage
-filterLCOV  lcov.info.filtered 'script*' lcov.info.filtered
+filterLCOV lcov.info.filtered 'script*' lcov.info.filtered
+
+# Check if filtered coverage file is empty
+if [ ! -s lcov.info.filtered ]; then
+    echo "No coverage data after filtering - all code was excluded. Exiting successfully."
+    exit 0
+fi
 
 # generate HTML report based on lcov file
 genhtml --branch-coverage --legend -o ${HTML_DIR} lcov.info.filtered
