@@ -29,7 +29,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-node": "^11.1.0",
     "prettier": "^3.2.5",
-    "solhint": "^3.4.1",
+    "solhint": "^5.0.5",
     "solidity-code-metrics": "^0.0.25",
     "typescript": "^5.1.3"
   },
