@@ -21,8 +21,8 @@ FOUNDRY_PROFILE=lite forge build --build-info
 bun run solhint --formatter stylish ./{contracts,script,test}/**/*.sol
 
 function filterOutSmallContracts() {
-    # Only show large contracts, larger than 15 kb
-    awk -F ' *\\| *' 'NR < 6 || $3 > 15'
+    # Only show large contracts, larger than 5 kb
+    sed -e 's/,//g' | awk -F ' *\\| *' 'NR < 6 || $3 > 5000'
 }
 
 SIZE_REPORT=reports/contract-size-report.md
