@@ -18,7 +18,7 @@ FOUNDRY_PROFILE=lite forge build --build-info
 
 # formatter is specified to avoid spam discord invite...
 # See https://github.com/protofire/solhint/blob/bea42ef8e2518b607f10b7b18e2f7747816d149c/solhint.js#L322
-bun run solhint --formatter stylish ./{contracts,script,test}/**/*.sol
+bun run solhint --formatter stylish ./{contracts,script,test}/*.sol ./{contracts,script,test}/**/*.sol
 
 function filterOutSmallContracts() {
     # Only show large contracts, larger than 5 kb
