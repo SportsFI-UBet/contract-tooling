@@ -15,8 +15,7 @@ pushd ${ROOT_DIR} >/dev/null
 # Default foundry profile to lite unless already specified in environment
 export FOUNDRY_PROFILE=${FOUNDRY_PROFILE:-lite}
 
-forge build --build-info
-forge coverage --ffi --report lcov $@
+forge coverage --ffi --ir-minimum --report lcov $@
 
 HTML_DIR=reports/coverage
 
