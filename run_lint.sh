@@ -22,7 +22,16 @@ bun run solhint --formatter stylish ./{contracts,script,test}/*.sol ./{contracts
 
 function filterOutSmallContracts() {
     # Only show large contracts, larger than 5 kb
-    sed -e 's/,//g' | awk -F ' *\\| *' 'NR < 6 || $3 > 5000'
+    sed -e 's/,//g' | awk -F ' *\\| *' '
+$2 == "Contract" {
+    print
+    print "|-|-|-|-|-|"
+    next
+}
+
+# only keep rows with size > 5000 bytes
+$3 + 0 == $3 && $3 > 5000 { print; next }
+'
 }
 
 SIZE_REPORT=reports/contract-size-report.md
