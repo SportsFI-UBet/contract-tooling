@@ -17,6 +17,9 @@ export interface DeployOptions {
   privateKey: string;
   scriptToExecute: string;
   rpcUrl: string;
+  /** Whether to wait for each transaction to complete and not do things in
+   * parallel */
+  slow: boolean;
   /**
    * Whether to broadcast the transactions
    */
@@ -40,7 +43,7 @@ export class Forge {
   public static async initialize(): Promise<Forge> {
     const forgePath = await getForgeCommand();
     const options: ForgeOptions = {
-      cwd: resolve(__dirname, "..", ".."),
+      cwd: resolve(__dirname, "..", "..", ".."),
     };
     return new Forge(forgePath, options);
   }
@@ -52,6 +55,7 @@ export class Forge {
   public async run(args: string[]): Promise<void> {
     console.info("Running with", {
       args,
+      cwd: this._options.cwd,
     });
     const childProcess = spawn(this._path, args, {
       cwd: this._options.cwd,
@@ -94,7 +98,7 @@ export class Forge {
       return;
     }
 
-    const args: string[] = ["script", "-vvvv", options.scriptToExecute];
+    const args: string[] = ["script", options.scriptToExecute, "-vvvv"];
 
     if (options.dryRun) {
       // Upgrade scripts rely on this to not write out the deployment json
@@ -102,6 +106,10 @@ export class Forge {
     } else {
       process.env["US_DRY_RUN"] = "false";
       args.push("--broadcast");
+    }
+
+    if (options.slow) {
+      args.push("--slow");
     }
 
     args.push("--ffi");
@@ -118,9 +126,9 @@ export class Forge {
       return;
     }
 
-    const args: string[] = ["script", "-vvvv", options.scriptToExecute];
+    const args: string[] = ["script", options.scriptToExecute, "-vvvv"];
 
-    args.push("--verify", "--resume");
+    args.push("--verify", "--resume", "--broadcast");
     args.push("--sender", options.sender);
     args.push("--private-key", options.privateKey);
     args.push("--verifier", "etherscan");
