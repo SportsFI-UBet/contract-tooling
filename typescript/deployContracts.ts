@@ -52,6 +52,7 @@ const main = async (): Promise<void> => {
     dryRun,
     verifyOnly,
     verifyOptions: chainVars.verifier,
+    slow: true,
   };
 
   await forge.deployAndVerify(deployOptions);
